@@ -36,9 +36,9 @@ SECRET is your secret key
 More information here: https://llamalab.com/automate/cloud/
 
 [Automate]: https://play.google.com/store/apps/details?id=com.llamalab.automate
-[Androtify-cli]: https://github.com/nsvir/androtify-cli
-[Androtify-flow]: https://github.com/nsvir/androtify-flow
-[Flow]: [Androtify-flow]
+[Androtify-cli]: https://github.com/nsvir/androtify-cli#androtify-cli
+[Androtify-flow]: https://github.com/nsvir/androtify-flow#androtify-flow
+[Flow]: https://github.com/nsvir/androtify-flow#androtify-flow
 [Documentation]: https://llamalab.com/automate/cloud/
 
 HELP
