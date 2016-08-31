@@ -36,4 +36,4 @@ function notify() {
     curl -X POST -H "Content-Type: application/json" -d "$BASE_CONTENT" $GATE_URL 2>&1 | awk "$RULE"
 }
 
-notify $@
+notify "$@"
