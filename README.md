@@ -3,7 +3,8 @@ Androtify sends a persistent notification to your Android phone from a shell scr
 
 INSTALLATION
 ===========
-|   CLIENT    |    CLOUD    |    SERVER    |
+|     CLIENT    |     CLOUD    | SERVER |
+| ------------- | ------------ | ------ |
 | [ShellScript] | Google cloud | [Flow] |
 
 - Install the [flow] on your android device:
