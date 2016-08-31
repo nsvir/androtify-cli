@@ -1,0 +1,39 @@
+#! /bin/bash
+
+CONFIG=${0%/*}/config
+GATE_URL="https://llamalab.com/automate/cloud/message"
+
+function initError() {
+    echo "### AUTO GENERATED CONFIGURATION ###" >> $CONFIG
+    echo -e "\nDESTINATION_MAIL=\"\"" >> $CONFIG
+    echo "SECRET=\"\"" >> $CONFIG
+    echo "Configuration file initiated"
+    exit
+}
+
+if [[ $1 == --help || $1 == -h ]]
+then
+    echo -e "Usage: $0\t\tRemove the notification\nUsage: $0 title\tOnly display a title\nUsage: $0 title body\tDisplay a title and a body"
+    exit
+fi
+
+! [[ -f $CONFIG ]] && initError
+
+source $CONFIG
+
+function notify() {
+
+    BASE_CONTENT="{"
+    BASE_CONTENT+='"secret": "'"$SECRET"'",'
+    BASE_CONTENT+='"to": "'"$DESTINATION_MAIL"'",'
+    BASE_CONTENT+='"device": null,'
+    BASE_CONTENT+='"payload": "'
+    [[ $# -ge 1 ]] && BASE_CONTENT+='{\"title\": \"'"$1"'\", \"content\": \"'"$2"'\"}'
+    BASE_CONTENT+='"}'
+
+    RULE='/<h1>.*<\/h1>/{s=index($0,">"); e=index($0, "</"); print substr($0, s + 1, e - s - 1) }'
+
+    curl -X POST -H "Content-Type: application/json" -d "$BASE_CONTENT" $GATE_URL 2>&1 | awk "$RULE"
+}
+
+notify $@
