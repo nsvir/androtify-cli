@@ -7,11 +7,11 @@ INSTALLATION
 | ------------- | ------------ | ------ |
 | [ShellScript] | Google cloud | [Flow] |
 
-- Install the [flow] on your android device:
+- Install the [Flow] on your android device:
 - `git clone https://github.com/nsvir/androtify.git androtify`
 - `cd androtify`
 - `echo DESTINATION_MAIL='your mail address' >> config`
-- `echo SECRET='your secret key' >> config` [Documentation]
+- `echo SECRET='your secret key' >> config` [Where is my secret key] [Documentation]
 - `./androtify "My title" "Hello World!"`
 - `./androtify --help`
 
