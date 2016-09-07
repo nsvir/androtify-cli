@@ -5,33 +5,28 @@ GATE_URL="https://llamalab.com/automate/cloud/message"
 
 function usage() {
     echo "Usage $0:"
-    echo "-t: specify title"
     echo "-p: concerns the permanent notification"
-    echo "-v: make the permanent notification visible"
     echo "-h: shows this help"
     exit
 }
 
 PERMANENT="false"
-VISIBLE="false"
+VISIBLE="true"
 TITLE=""
 
-while getopts ":t:pvh" o; do
+while getopts ":ph" o; do
     case "${o}" in
-        t)
-            TITLE=${OPTARG}
-            ;;
         p)
             PERMANENT="true"
             ;;
-        v)
-            VISIBLE="true"
-            ;;
         * | h)
             usage
+	    ;;
     esac
 done
 shift $((OPTIND-1))
+
+[[ $# == 0 ]] && VISIBLE="false"
 
 function initError() {
     echo "### AUTO GENERATED CONFIGURATION ###" >> $CONFIG
@@ -55,11 +50,10 @@ function notify() {
     BASE_CONTENT+='{'
     BASE_CONTENT+='\"permanent\":\"'$PERMANENT'\",'
     BASE_CONTENT+='\"visible\": \"'$VISIBLE'\",'
-    BASE_CONTENT+='\"title\": \"'$TITLE'\",'
-    BASE_CONTENT+='\"content\": \"'$1'\"'
+    BASE_CONTENT+='\"title\": \"'$1'\",'
+    BASE_CONTENT+='\"content\": \"'$2'\"'
     BASE_CONTENT+='}"}'
 
-    echo "$BASE_CONTENT"
     RULE='/<h1>.*<\/h1>/{s=index($0,">"); e=index($0, "</"); print substr($0, s + 1, e - s - 1) }'
 
     curl -X POST -H "Content-Type: application/json" -d "$BASE_CONTENT" $GATE_URL 2>&1 | awk "$RULE"
